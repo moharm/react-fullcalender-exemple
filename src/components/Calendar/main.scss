@@ -1,0 +1,124 @@
+@import "~@fullcalendar/core/main.css";
+@import "~@fullcalendar/daygrid/main.css";
+@import "~@fullcalendar/timegrid/main.css";
+
+.demo-app {
+  font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
+  font-size: 14px;
+}
+
+.demo-app-top {
+  margin: 0 0 3em;
+}
+
+.demo-app-calendar {
+  margin: 0 auto;
+  max-width: 900px;
+}
+
+.fc-today.fc-day-top > span {
+  color: #ffffff !important;
+  background-color: #4c81bf;
+  border: 0px !important;
+}
+
+.fc-ltr .fc-dayGrid-view .fc-day-top .fc-day-number {
+  float: left;
+  width: 17px;
+  height: 15px;
+  text-align: center;
+  padding-top: 4px;
+  font-size: 10px;
+  font-weight: 800;
+  color: #4040c5;
+  border: 1px solid #cccaca;
+  border-radius: 50%;
+  margin: 4px 0 0 4px;
+  background-color: #fafafa;
+}
+//to day number Style
+td.fc-day-top.fc-thu.fc-today.alert.alert-info .fc-day-number {
+  float: left;
+  width: 17px;
+  height: 15px;
+  text-align: center;
+  padding-top: 4px;
+  font-size: 10px;
+  font-weight: 800;
+  color: #cccaca;
+  border: 1px solid #4040c5;
+  border-radius: 50%;
+  margin: 4px 0 0 4px;
+  background-color: #4040c5;
+}
+
+.headerText {
+  font-size: 0.9em;
+  background-color: transparent;
+}
+
+.alert-info {
+  background-color: transparent;
+}
+
+.table-bordered thead td,
+.table-bordered thead th {
+  border: 0px;
+}
+.fc-day-header > span {
+  float: left;
+}
+
+.table-bordered {
+  border: 0px;
+}
+
+.fc-dayGridMonth-view .fc-sat {
+  width: 6%;
+}
+.fc-dayGridMonth-view .fc-sun {
+  width: 6%;
+}
+// .fc-dayGridWeek-view .fc-content-skeleton {
+//   width: 122.4%;
+// }
+
+// .fc-timeGridWeek-view .fc-content-skeleton {
+//   width: 122%;
+// }
+td.fc-day.fc-sat {
+  background-color: aliceblue;
+}
+td.fc-day.fc-sun {
+  background-color: aliceblue;
+}
+
+td.fc-day-top.fc-sat > span.fc-day-number {
+  color: #cacaca !important;
+}
+
+td.fc-day-top.fc-sun > span.fc-day-number {
+  color: #cacaca !important;
+}
+
+.EventWarnig {
+  border: 0px;
+  width: 30px;
+}
+
+.MuiButtonGroup-groupedHorizontal:first-child {
+  border-top-left-radius: 3px !important;
+  border-bottom-left-radius: 3px !important;
+}
+
+.MuiButtonGroup-groupedHorizontal:last-child {
+  border-top-right-radius: 3px !important;
+  border-bottom-right-radius: 3px !important;
+}
+
+@media screen and (max-width: 394px) {
+  button > img {
+    height: auto;
+    width: 100%;
+  }
+}

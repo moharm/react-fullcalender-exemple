@@ -1,26 +1,33 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import "./App.css";
+import ThemeContextProvider from "./contexts/ThemeContext";
+import AuthContextProvider from "./contexts/AuthContext";
+import BookContextProvider from "./contexts/BookContext";
+import MyApp from "./components";
+import { Router, Route } from "react-router-dom";
+import { LastLocationProvider } from "react-router-last-location";
+import Login from "./components/Login";
+import history from "./assets/history/history";
+import Header from "./components/Calendar/Modal/Header";
 
-function App() {
+const App: React.FC = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <ThemeContextProvider>
+        <AuthContextProvider>
+          <BookContextProvider>
+            <Router history={history}>
+              <LastLocationProvider>
+                <Route exact path="/login" component={Login}></Route>
+                <Route path="/App" component={MyApp}></Route>
+                <Route path="/CalenderHeader" component={Header}></Route>
+              </LastLocationProvider>
+            </Router>
+          </BookContextProvider>
+        </AuthContextProvider>
+      </ThemeContextProvider>
+    </>
   );
-}
+};
 
 export default App;

@@ -1,0 +1,16 @@
+dd {
+  float: left;
+  width: 19px;
+  height: 16px;
+  text-align: center;
+  padding-top: 3px;
+  font-size: 10px;
+  font-weight: 800;
+  color: #4040c5;
+  border: 1px solid #cccaca;
+  border-radius: 50%;
+  margin: 4px 0 0 4px;
+}
+.headerText {
+  font-size: 0.9em;
+}
