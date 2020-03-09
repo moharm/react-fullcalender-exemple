@@ -19,25 +19,11 @@ const EventModal = (props: any) => {
   const { data } = props;
   const isweekend = (date: any) => {
     const dayNumber = date.getDay();
-    // console.log(dayNumber);
     if (dayNumber === 6 || dayNumber === 7) {
-      console.log("yes");
       return true;
     }
     return false;
   };
-
-  // useEffect(() => {
-  //   console.log(
-  //     //@ts-ignore
-  //     document.getElementsByClassName("makeStyles-weekendEvent-188")[0]
-  //     // .parentElement
-  //   );
-  // document
-  //   .getElementsByClassName("makeStyles-weekendEvent-188")
-  //   //@ts-ignore
-  //   .parentNode.css("border", "0px");
-  // });
 
   return (
     <>

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import {
   Grid,
   Button,
@@ -33,9 +33,12 @@ const Header = (props: any) => {
     getOptionLabel: (option: ValueOptionType) => option.title
   };
 
-  useEffect(() => {
-    currentdate();
-  });
+  // useEffect(() => {
+  //   setstate((prev: any) => ({
+  //     ...prev,
+  //     currentdate: currentdate()
+  //   }));
+  // });
   return (
     <div className={classes.root}>
       <Grid container spacing={1}>

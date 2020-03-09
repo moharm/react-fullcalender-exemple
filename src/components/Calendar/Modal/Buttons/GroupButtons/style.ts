@@ -1,6 +1,5 @@
 import { makeStyles, createStyles } from "@material-ui/core";
 import { Theme } from "@fullcalendar/core";
-import { borderRadius } from "@material-ui/system";
 
 export const useStyles = makeStyles((theme: Theme) =>
   createStyles({

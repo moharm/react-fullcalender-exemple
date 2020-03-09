@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import FullCalendar from "@fullcalendar/react";
 import { EventInput } from "@fullcalendar/core";
 import dayGridPlugin from "@fullcalendar/daygrid";
@@ -19,13 +19,15 @@ import "moment/locale/fr";
 interface DemoAppState {
   calendarWeekends: boolean;
   calendarEvents: EventInput[];
+  currentdate: string;
 }
 const calendarComponentRef = React.createRef<FullCalendar>();
 
 const Calendar: React.FC = (props: any) => {
   const initialState = {
     calendarWeekends: true,
-    calendarEvents: events
+    calendarEvents: events,
+    currentdate: ""
   };
   moment.locale("fr");
   const [state, setstate] = useState<DemoAppState>(initialState);
@@ -109,14 +111,18 @@ const Calendar: React.FC = (props: any) => {
       "MMMM YYYY"
     );
   };
-  useEffect(() => {
-    console.log(getcurrentdate());
-  });
+  // const Idsystemout = setTimeout(() => {
+  //   setstate((prev: any) => ({
+  //     ...prev,
+  //     currentdate: getcurrentdate()
+  //   }));
+  //   clearTimeout(Idsystemout);
+  // }, 500);
   return (
     <div className="demo-app">
       <div>
         <Header
-          currentdate={getcurrentdate}
+          currentdate={state.currentdate}
           changeview={changeview}
           gotonextdate={gotonextdate}
           gotobackdate={gotobackdate}
