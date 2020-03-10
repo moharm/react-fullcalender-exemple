@@ -14,8 +14,6 @@ import { useStyles } from "./style";
 const EventPoperComp = (props: any) => {
   const classes = useStyles();
 
-  const { data } = props;
-
   return (
     <Card className={classes.root}>
       <CardContent className={classes.CardContent}>

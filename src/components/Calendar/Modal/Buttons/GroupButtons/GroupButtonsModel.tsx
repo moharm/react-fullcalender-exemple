@@ -2,14 +2,16 @@ import React, { useState } from "react";
 import { ButtonGroup, Button } from "@material-ui/core";
 import { useStyles } from "./style";
 import clsx from "clsx";
+import { IButtonView } from "./data";
 
 const GroupButtonsModel = (props: any) => {
   const { Buttons, ChangeView } = props;
   const classes = useStyles();
-  const [state, setstate] = useState(Buttons);
+  const [state, setstate] = useState<Array<IButtonView>>(Buttons);
 
   const onClick = (key: string, view: string) => {
-    const test = state.map((button: any) => {
+    //Swich to selected Button and View
+    const buttons: Array<IButtonView> = state.map((button: any) => {
       if (button.key === key) {
         return {
           ...button,
@@ -22,10 +24,24 @@ const GroupButtonsModel = (props: any) => {
         };
       }
     });
-    setstate(test);
+    setstate(buttons);
     ChangeView(view);
   };
-  const buttons = state;
+
+  function IconButtonBavoriteNode(
+    button: IButtonView,
+    classeCSS: string
+  ): JSX.Element {
+    // return iconButtonFavorite if it has isFavorite=true
+
+    return button.isFavorite ? (
+      <button.iconButtonFavorite className={classeCSS} />
+    ) : (
+      <button.iconButton className={classeCSS} />
+    );
+  }
+
+  const buttons: Array<IButtonView> = state;
   return (
     <ButtonGroup
       className={classes.root}
@@ -40,13 +56,7 @@ const GroupButtonsModel = (props: any) => {
           className={clsx(classes.Button, {
             [classes.ButtonSelected]: button.isSelected
           })}
-          startIcon={
-            button.isFavorite ? (
-              <button.iconButtonFavorite className={classes.iconButton} />
-            ) : (
-              <button.iconButton className={classes.iconButton} />
-            )
-          }
+          startIcon={IconButtonBavoriteNode(button, classes.iconButton)}
         >
           {button.title}
         </Button>

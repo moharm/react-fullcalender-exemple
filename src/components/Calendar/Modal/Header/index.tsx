@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Grid,
   Button,
@@ -24,8 +24,9 @@ import Checkbox, { CheckboxProps } from "@material-ui/core/Checkbox";
 
 import { buttons } from "../Buttons/GroupButtons/data";
 import clsx from "clsx";
+import { IheaderProps } from "./types";
 
-const Header = (props: any) => {
+const Header = (props: IheaderProps) => {
   const { changeview, gotobackdate, gotonextdate, currentdate } = props;
   const classes = useStyles();
   const defaultProps = {
@@ -33,12 +34,13 @@ const Header = (props: any) => {
     getOptionLabel: (option: ValueOptionType) => option.title
   };
 
-  // useEffect(() => {
-  //   setstate((prev: any) => ({
-  //     ...prev,
-  //     currentdate: currentdate()
-  //   }));
-  // });
+  const [Currentdate, setDate] = useState(currentdate());
+
+  const changeDate = (Action: () => void) => {
+    Action();
+    setDate(currentdate());
+  };
+
   return (
     <div className={classes.root}>
       <Grid container spacing={1}>
@@ -51,17 +53,17 @@ const Header = (props: any) => {
             <DateRangeIcon htmlColor="#28a745" fontSize="small" />
           </IconButtonModel>
           <IconButtonModel
-            onClick={gotobackdate}
+            onClick={() => changeDate(gotobackdate)}
             size="small"
             WithOutborder={true}
           >
             <ArrowBackIosRoundedIcon htmlColor="#5e5e5e" fontSize="small" />
           </IconButtonModel>
           <Typography className={classes.currentMonthLabel} component="span">
-            {currentdate}
+            {Currentdate}
           </Typography>
           <IconButtonModel
-            onClick={gotonextdate}
+            onClick={() => changeDate(gotonextdate)}
             size="small"
             WithOutborder={true}
           >
@@ -117,7 +119,7 @@ const Header = (props: any) => {
           <Autocomplete
             className={classes.Autocomplete}
             {...defaultProps}
-            id="disable-close-on-select"
+            id="disable-close-on-selec"
             clearOnEscape
             renderInput={params => (
               <TextField {...params} label="Valeur-Input" margin="normal" />

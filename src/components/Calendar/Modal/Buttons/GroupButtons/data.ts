@@ -1,7 +1,17 @@
 import StarIcon from "@material-ui/icons/Star";
 import StarBorderIcon from "@material-ui/icons/StarBorder";
 
-export const buttons = [
+export interface IButtonView {
+  key: string;
+  title: string;
+  view: string;
+  isSelected: boolean;
+  isFavorite: boolean;
+  iconButton: (arg: any) => JSX.Element;
+  iconButtonFavorite: (arg: any) => JSX.Element;
+}
+
+export const buttons: Array<IButtonView> = [
   {
     key: "Jour",
     title: "Jour",
@@ -15,7 +25,7 @@ export const buttons = [
     key: "Semaine",
     title: "Semaine",
     view: "dayGridWeek",
-    isSelected: false,
+    isSelected: true,
     isFavorite: true,
     iconButton: StarBorderIcon,
     iconButtonFavorite: StarIcon
@@ -24,7 +34,7 @@ export const buttons = [
     key: "Mois",
     title: "Mois",
     view: "dayGridMonth",
-    isSelected: true,
+    isSelected: false,
     isFavorite: false,
     iconButton: StarBorderIcon,
     iconButtonFavorite: StarIcon

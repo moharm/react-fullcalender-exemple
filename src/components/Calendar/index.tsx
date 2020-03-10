@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import FullCalendar from "@fullcalendar/react";
 import { EventInput } from "@fullcalendar/core";
 import dayGridPlugin from "@fullcalendar/daygrid";
@@ -31,9 +31,12 @@ const Calendar: React.FC = (props: any) => {
   };
   moment.locale("fr");
   const [state, setstate] = useState<DemoAppState>(initialState);
+  const CalendarApi = () => {
+    return calendarComponentRef.current!.getApi();
+  };
 
   const eventMouseEnter = (e: any) => {
-    if (!e.event.extendedProps.type && e.event.extendedProps.type != "warning")
+    if (!e.event.extendedProps.type && e.event.extendedProps.type !== "warning")
       e.el.style.backgroundColor = e.event.extendedProps.HoverColor;
   };
   const eventMouseLeave = (e: any) => {
@@ -41,15 +44,16 @@ const Calendar: React.FC = (props: any) => {
   };
 
   const gotonextdate = () => {
-    let calendarApi = calendarComponentRef.current!.getApi();
+    let calendarApi = CalendarApi();
     calendarApi.next();
   };
   const gotobackdate = () => {
-    let calendarApi = calendarComponentRef.current!.getApi();
+    let calendarApi = CalendarApi();
     calendarApi.prev();
   };
 
   const eventRender = (e: any) => {
+    console.log("********************");
     const el = e.el;
     const content = (
       <React.Fragment>
@@ -73,7 +77,7 @@ const Calendar: React.FC = (props: any) => {
   };
 
   const gotoPast = () => {
-    let calendarApi = calendarComponentRef.current!.getApi();
+    let calendarApi = CalendarApi();
     calendarApi.gotoDate("2000-01-01"); // call a method on the Calendar object
   };
 
@@ -102,27 +106,21 @@ const Calendar: React.FC = (props: any) => {
     );
   };
 
-  const changeview = (view: string) => {
-    calendarComponentRef.current!.getApi().changeView(view);
+  const changeview = (view: string): void => {
+    CalendarApi().changeView(view);
   };
 
-  const getcurrentdate = () => {
-    return moment(calendarComponentRef.current!.getApi().getDate()).format(
-      "MMMM YYYY"
-    );
+  const getcurrentdate = (): string => {
+    return calendarComponentRef.current
+      ? moment(CalendarApi().getDate()).format("MMMM YYYY")
+      : moment(new Date()).format("MMMM YYYY");
   };
-  // const Idsystemout = setTimeout(() => {
-  //   setstate((prev: any) => ({
-  //     ...prev,
-  //     currentdate: getcurrentdate()
-  //   }));
-  //   clearTimeout(Idsystemout);
-  // }, 500);
+
   return (
     <div className="demo-app">
       <div>
         <Header
-          currentdate={state.currentdate}
+          currentdate={getcurrentdate}
           changeview={changeview}
           gotonextdate={gotonextdate}
           gotobackdate={gotobackdate}
@@ -130,7 +128,7 @@ const Calendar: React.FC = (props: any) => {
       </div>
       <div>
         <FullCalendar
-          defaultView="dayGridMonth"
+          defaultView="dayGridWeek"
           fixedWeekCount={false}
           columnHeaderHtml={UpperColumnsHeaderText}
           timeZone="UTC"
