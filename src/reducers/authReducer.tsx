@@ -4,6 +4,7 @@ export const authReducer = (state: any, action: any) => {
   switch (action.type) {
     case "LOGIN_SUCCES":
       localStorage.setItem("token", JSON.stringify(action.payload));
+      console.log("login succes");
       return {
         ...state,
         token: action.payload,

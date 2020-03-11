@@ -11,28 +11,36 @@ import listPlugin from "@fullcalendar/list";
 
 import "./main.scss";
 import { events } from "../../assets/calendar/events";
-import EventModal from "./Modal/EventModal";
-import Header from "./Modal/Header";
+import CalendarHeader from "../CalendarHeader";
 import moment from "moment";
 import "moment/locale/fr";
+import EventModal from "../Models/EventModal";
+import { getWeeksFromInput } from "@fullcalendar/core/datelib/duration";
 
 interface DemoAppState {
   calendarWeekends: boolean;
   calendarEvents: EventInput[];
   currentdate: string;
+  calendarComponentRef: any;
+  isLoadign: boolean;
 }
-const calendarComponentRef = React.createRef<FullCalendar>();
+const getcalendarComponentRef = async () => {
+  const calendarComponentRef = await React.createRef<FullCalendar>();
+  return calendarComponentRef;
+};
 
 const Calendar: React.FC = (props: any) => {
   const initialState = {
     calendarWeekends: true,
     calendarEvents: events,
-    currentdate: ""
+    currentdate: "",
+    calendarComponentRef: null,
+    isLoadign: true
   };
   moment.locale("fr");
   const [state, setstate] = useState<DemoAppState>(initialState);
   const CalendarApi = () => {
-    return calendarComponentRef.current!.getApi();
+    return state.calendarComponentRef.current!.getApi();
   };
 
   const eventMouseEnter = (e: any) => {
@@ -111,15 +119,21 @@ const Calendar: React.FC = (props: any) => {
   };
 
   const getcurrentdate = (): string => {
-    return calendarComponentRef.current
+    // CalendarApi();
+    return state.calendarComponentRef.current
       ? moment(CalendarApi().getDate()).format("MMMM YYYY")
       : moment(new Date()).format("MMMM YYYY");
   };
 
-  return (
+  const getDateWeek = () => {
+    console.log(CalendarApi().view.activeStart);
+    console.log(CalendarApi().view.activeEnd);
+  };
+
+  return state.isLoading ? (
     <div className="demo-app">
       <div>
-        <Header
+        <CalendarHeader
           currentdate={getcurrentdate}
           changeview={changeview}
           gotonextdate={gotonextdate}
@@ -127,9 +141,11 @@ const Calendar: React.FC = (props: any) => {
         />
       </div>
       <div>
+        <button onClick={getDateWeek}>week</button>
         <FullCalendar
           defaultView="dayGridWeek"
           fixedWeekCount={false}
+          weekLabel="S"
           columnHeaderHtml={UpperColumnsHeaderText}
           timeZone="UTC"
           firstDay={1}
@@ -165,13 +181,13 @@ const Calendar: React.FC = (props: any) => {
           //   CustomButton2: "fas fa-bell",
           //   CustomButton1: "right-single-arrow"   //// Add icon to customButtons to review !!!
           // }}
-          // header={{
-          //   left: "prev,next today CustomButton1",
-          //   center: "title",
-          //   right:
-          //     "dayGridMonth,dayGridWeek,timeGridWeek,timeGridDay,listWeek CustomButton2"
-          // }}
-          header={false}
+          header={{
+            left: "prev,next today CustomButton1",
+            center: "title",
+            right:
+              "dayGridMonth,dayGridWeek,timeGridWeek,timeGridDay,listWeek CustomButton2"
+          }}
+          // header={false}
           views={{
             timeGridWeek: {
               // name of view
@@ -206,6 +222,8 @@ const Calendar: React.FC = (props: any) => {
         />
       </div>
     </div>
+  ) : (
+    <div>Loading...</div>
   );
 };
 

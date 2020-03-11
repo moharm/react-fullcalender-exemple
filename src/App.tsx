@@ -8,7 +8,7 @@ import { Router, Route } from "react-router-dom";
 import { LastLocationProvider } from "react-router-last-location";
 import Login from "./components/Login";
 import history from "./assets/history/history";
-import Header from "./components/Calendar/Modal/Header";
+import Header from "./components/CalendarHeader";
 
 const App: React.FC = () => {
   return (

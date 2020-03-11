@@ -5,3 +5,7 @@ export interface IheaderProps {
   gotonextdate: () => void;
   currentdate: () => string;
 }
+export interface IStyteType {
+  currentdateValue: string;
+  isFilterdisplayed: boolean;
+}

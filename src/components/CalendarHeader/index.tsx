@@ -7,14 +7,12 @@ import {
   Divider,
   TextField
 } from "@material-ui/core";
-import { useStyles } from "./style";
+import { useStyles, SwitchStyle } from "./style";
 import FlagOutlinedIcon from "@material-ui/icons/FlagOutlined";
 import SystemUpdateAltOutlinedIcon from "@material-ui/icons/SystemUpdateAltOutlined";
 import SettingsIcon from "@material-ui/icons/Settings";
-import IconButtonModel from "../Buttons/IconButtonModel";
 import DateRangeIcon from "@material-ui/icons/DateRange";
 import EventNoteIcon from "@material-ui/icons/EventNote";
-import GroupButtonsModel from "../Buttons/GroupButtons/GroupButtonsModel";
 import ArrowBackIosRoundedIcon from "@material-ui/icons/ArrowBackIosRounded";
 import ArrowForwardIosRoundedIcon from "@material-ui/icons/ArrowForwardIosRounded";
 import TuneRoundedIcon from "@material-ui/icons/TuneRounded";
@@ -22,25 +20,45 @@ import ControlPointRoundedIcon from "@material-ui/icons/ControlPointRounded";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import Checkbox, { CheckboxProps } from "@material-ui/core/Checkbox";
 
-import { buttons } from "../Buttons/GroupButtons/data";
 import clsx from "clsx";
-import { IheaderProps } from "./types";
+import { IheaderProps, IStyteType } from "./types";
+import IconButtonModel from "../Models/Buttons/IconButtonModel";
+import GroupButtonsModel from "../Models/Buttons/GroupButtons/GroupButtonsModel";
+import { buttons } from "../Models/Buttons/GroupButtons/data";
+import SwitchModel from "../Models/Switch";
 
 const Header = (props: IheaderProps) => {
-  const { changeview, gotobackdate, gotonextdate, currentdate } = props;
   const classes = useStyles();
   const defaultProps = {
     options: Values,
     getOptionLabel: (option: ValueOptionType) => option.title
   };
 
-  const [Currentdate, setDate] = useState(currentdate());
+  //props
+  const { changeview, gotobackdate, gotonextdate, currentdate } = props;
 
-  const changeDate = (Action: () => void) => {
-    Action();
-    setDate(currentdate());
+  // State
+  const initialState: IStyteType = {
+    currentdateValue: currentdate(),
+    isFilterdisplayed: false
   };
 
+  const [state, setState] = useState(initialState);
+
+  const changeDate = (Action: () => void): void => {
+    Action();
+    setState(prev => ({
+      ...prev,
+      currentdateValue: currentdate()
+    }));
+  };
+  const SwitchHandleChange = (isChecked: boolean) => {
+    console.log(isChecked);
+    setState(prev => ({
+      ...prev,
+      isFilterdisplayed: isChecked
+    }));
+  };
   return (
     <div className={classes.root}>
       <Grid container spacing={1}>
@@ -60,7 +78,7 @@ const Header = (props: IheaderProps) => {
             <ArrowBackIosRoundedIcon htmlColor="#5e5e5e" fontSize="small" />
           </IconButtonModel>
           <Typography className={classes.currentMonthLabel} component="span">
-            {Currentdate}
+            {state.currentdateValue}
           </Typography>
           <IconButtonModel
             onClick={() => changeDate(gotonextdate)}
@@ -70,9 +88,13 @@ const Header = (props: IheaderProps) => {
             <ArrowForwardIosRoundedIcon htmlColor="#5e5e5e" fontSize="small" />
           </IconButtonModel>
           <Divider orientation="vertical" className={classes.divider} />
-          <IconButtonModel size="small">
-            <TuneRoundedIcon htmlColor="#28a745" fontSize="small" />
-          </IconButtonModel>
+          <SwitchModel
+            classes={SwitchStyle()}
+            SwitchHandleChange={SwitchHandleChange}
+          ></SwitchModel>
+          <Box component="span" margin="auto 1%">
+            Filtres
+          </Box>
           <Button
             size="small"
             variant="text"
@@ -114,68 +136,70 @@ const Header = (props: IheaderProps) => {
           </Grid> */}
         </Grid>
       </Grid>
-      <Grid container spacing={4} className={classes.Header2}>
-        <Grid item xs={4}>
-          <Autocomplete
-            className={classes.Autocomplete}
-            {...defaultProps}
-            id="disable-close-on-selec"
-            clearOnEscape
-            renderInput={params => (
-              <TextField {...params} label="Valeur-Input" margin="normal" />
-            )}
-          />
-          <Box className={classes.LabelInfoInput}>
-            Texte-information-aide-a-la-saisie
-          </Box>
-        </Grid>
-        <Grid item xs={4}>
-          <Autocomplete
-            className={classes.Autocomplete}
-            {...defaultProps}
-            id="disable-close-on-select"
-            clearOnEscape
-            renderInput={params => (
-              <TextField {...params} label="Valeur-Input" margin="normal" />
-            )}
-          />
-          <Box className={classes.LabelInfoInput}>
-            Texte-information-aide-a-la-saisie
-          </Box>
-        </Grid>
-        <Grid item xs={4}>
-          <Box style={{ color: "gray" }}>Afficher</Box>
-          <Box>
-            <Checkbox
-              className={classes.Checkbox}
-              disableRipple
-              color="default"
-              checkedIcon={
-                <span className={clsx(classes.icon, classes.checkedIcon)} />
-              }
-              icon={<span className={classes.icon} />}
-              inputProps={{ "aria-label": "decorative checkbox" }}
-              {...props}
+      {!state.isFilterdisplayed && (
+        <Grid container spacing={4} className={classes.Header2}>
+          <Grid item xs={4}>
+            <Autocomplete
+              className={classes.Autocomplete}
+              {...defaultProps}
+              id="disable-close-on-selec"
+              clearOnEscape
+              renderInput={params => (
+                <TextField {...params} label="Valeur-Input" margin="normal" />
+              )}
             />
-            <Box component="span">Mes audiences</Box>
-          </Box>
-          <Box>
-            <Checkbox
-              className={classes.Checkbox}
-              disableRipple
-              defaultChecked
-              color="default"
-              checkedIcon={
-                <span className={clsx(classes.icon, classes.checkedIcon)} />
-              }
-              icon={<span className={classes.icon} />}
-              inputProps={{ "aria-label": "decorative checkbox" }}
-              {...props}
+            <Box className={classes.LabelInfoInput}>
+              Texte-information-aide-a-la-saisie
+            </Box>
+          </Grid>
+          <Grid item xs={4}>
+            <Autocomplete
+              className={classes.Autocomplete}
+              {...defaultProps}
+              id="disable-close-on-select"
+              clearOnEscape
+              renderInput={params => (
+                <TextField {...params} label="Valeur-Input" margin="normal" />
+              )}
             />
-            <Box component="span">Audiences de greffe</Box>
-          </Box>
+            <Box className={classes.LabelInfoInput}>
+              Texte-information-aide-a-la-saisie
+            </Box>
+          </Grid>
+          <Grid item xs={4}>
+            <Box style={{ color: "gray" }}>Afficher</Box>
+            <Box>
+              <Checkbox
+                className={classes.Checkbox}
+                disableRipple
+                color="default"
+                checkedIcon={
+                  <span className={clsx(classes.icon, classes.checkedIcon)} />
+                }
+                icon={<span className={classes.icon} />}
+                inputProps={{ "aria-label": "decorative checkbox" }}
+                {...props}
+              />
+              <Box component="span">Mes audiences</Box>
+            </Box>
+            <Box>
+              <Checkbox
+                className={classes.Checkbox}
+                disableRipple
+                defaultChecked
+                color="default"
+                checkedIcon={
+                  <span className={clsx(classes.icon, classes.checkedIcon)} />
+                }
+                icon={<span className={classes.icon} />}
+                inputProps={{ "aria-label": "decorative checkbox" }}
+                {...props}
+              />
+              <Box component="span">Audiences de greffe</Box>
+            </Box>
+          </Grid>
         </Grid>
-      </Grid>
+      )}
     </div>
   );
 };

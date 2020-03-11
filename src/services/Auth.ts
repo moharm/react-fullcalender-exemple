@@ -10,6 +10,7 @@ interface UserType {
 export const LoginAction2 = async (user: UserType) => {
   try {
     const res = await axios.post("/authenticate", user);
+    console.log(res.data);
     return {
       type: "LOGIN_SUCCES",
       payload: res.data
@@ -42,11 +43,10 @@ export const LoginAction = async (
   }
 };
 
-export const LogoutAction = (dispatch: any) => {
-  localStorage.setItem("token", "");
-  history.push("/login");
-  dispatch({
+export const LogoutAction = async () => {
+  await localStorage.setItem("token", "");
+  return {
     type: "LOGOUT_SUCCES",
     payload: {}
-  });
+  };
 };

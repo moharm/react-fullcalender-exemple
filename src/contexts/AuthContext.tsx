@@ -40,7 +40,9 @@ const AuthContextProvider = (props: any) => {
       userName: user.userName,
       password: user.password
     };
-    dispatch(LoginAction2(User));
+    LoginAction2(User).then(action => {
+      dispatch(action);
+    });
     // lastLocation ? history.push(lastLocation) : history.push("/App/home");
   };
 
@@ -49,7 +51,9 @@ const AuthContextProvider = (props: any) => {
 */
   const Logout = (e: { preventDefault: () => void }) => {
     e.preventDefault();
-    LogoutAction(dispatch);
+    LogoutAction().then(action => {
+      dispatch(action);
+    });
   };
 
   return (

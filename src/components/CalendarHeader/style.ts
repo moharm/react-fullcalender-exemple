@@ -1,4 +1,10 @@
-import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
+import {
+  makeStyles,
+  createStyles,
+  Theme,
+  withStyles
+} from "@material-ui/core/styles";
+import { purple } from "@material-ui/core/colors";
 
 export const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -96,5 +102,21 @@ export const useStyles = makeStyles((theme: Theme) =>
         backgroundColor: "#106ba3"
       }
     }
+  })
+);
+
+export const SwitchStyle = makeStyles((theme: Theme) =>
+  createStyles({
+    switchBase: {
+      color: "#cccccc",
+      "&$checked": {
+        color: "#0ca319"
+      },
+      "&$checked + $track": {
+        backgroundColor: "#a5ce9e"
+      }
+    },
+    checked: {},
+    track: {}
   })
 );

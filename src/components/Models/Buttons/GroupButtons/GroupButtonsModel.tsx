@@ -10,7 +10,7 @@ const GroupButtonsModel = (props: any) => {
   const [state, setstate] = useState<Array<IButtonView>>(Buttons);
 
   const onClick = (key: string, view: string) => {
-    //Swich to selected Button and View
+    //Switch to selected Button and View
     const buttons: Array<IButtonView> = state.map((button: any) => {
       if (button.key === key) {
         return {

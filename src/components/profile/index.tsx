@@ -9,7 +9,7 @@ import {
 import history from "../../assets/history/history";
 
 const Profile = (props: RouteComponentProps & WithLastLocationProps) => {
-  const { isAuthentificated } = useContext(AuthContext);
+  const { isAuthentificated, Logout } = useContext(AuthContext);
   const lastLocation = useLastLocation();
   if (!isAuthentificated) {
     history.push("/login");
@@ -18,6 +18,9 @@ const Profile = (props: RouteComponentProps & WithLastLocationProps) => {
     <>
       <div>
         <h1>this is profile</h1>
+        <button onClick={Logout}>
+          {!isAuthentificated ? "Logged in" : "Logged out"}
+        </button>
         {JSON.stringify(lastLocation)}
       </div>
       <button

@@ -1,14 +1,16 @@
-import React from "react";
+import React, { ReactNode } from "react";
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 import IconButton from "@material-ui/core/IconButton";
 import clsx from "clsx";
 
 interface propstype {
-  size: string;
-  color: string;
+  size: "medium" | "small" | undefined;
+  color: "inherit" | "default" | "primary" | "secondary" | undefined;
   BackColor: string;
   borderStyle: string;
-  onClick: () => any;
+  WithOutborder: boolean;
+  onClick: () => void;
+  children: ReactNode;
 }
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -28,15 +30,15 @@ const useStyles = makeStyles((theme: Theme) =>
     }
   })
 );
-const IconButtonModel = (props: any) => {
-  const { size, color, onClick } = props;
+const IconButtonModel = (props: propstype) => {
+  const { size, color, WithOutborder, onClick, children } = props;
   const classes = useStyles();
   return (
     <div className={classes.root}>
       <label>
         <IconButton
           className={clsx(classes.Iconbotton, {
-            [classes.WithOutborder]: props.WithOutborder
+            [classes.WithOutborder]: WithOutborder
           })}
           size={size}
           color={color}
@@ -44,7 +46,7 @@ const IconButtonModel = (props: any) => {
           component="span"
           onClick={onClick}
         >
-          {props.children}
+          {children}
         </IconButton>
       </label>
     </div>
