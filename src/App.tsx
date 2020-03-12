@@ -20,7 +20,6 @@ const App: React.FC = () => {
               <LastLocationProvider>
                 <Route exact path="/login" component={Login}></Route>
                 <Route path="/App" component={MyApp}></Route>
-                <Route path="/CalenderHeader" component={Header}></Route>
               </LastLocationProvider>
             </Router>
           </BookContextProvider>

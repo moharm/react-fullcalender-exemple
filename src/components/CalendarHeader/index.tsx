@@ -27,11 +27,21 @@ import GroupButtonsModel from "../Models/Buttons/GroupButtons/GroupButtonsModel"
 import { buttons } from "../Models/Buttons/GroupButtons/data";
 import SwitchModel from "../Models/Switch";
 
-const Header = (props: IheaderProps) => {
+const Header = (props: IheaderProps & any) => {
   const classes = useStyles();
   const defaultProps = {
     options: Values,
     getOptionLabel: (option: ValueOptionType) => option.title
+  };
+
+  const getDefaultView = (): string => {
+    let view = "";
+    buttons.map(button => {
+      if (button.isFavorite) {
+        view = button.view;
+      }
+    });
+    return view;
   };
 
   //props
@@ -39,14 +49,28 @@ const Header = (props: IheaderProps) => {
 
   // State
   const initialState: IStyteType = {
-    currentdateValue: currentdate(),
+    currentdateValue: currentdate(getDefaultView()),
     isFilterdisplayed: false
   };
 
   const [state, setState] = useState(initialState);
 
-  const changeDate = (Action: () => void): void => {
+  const Ready = () => {
+    setState(prev => ({
+      ...prev,
+      currentdateValue: currentdate()
+    }));
+  };
+
+  const hundleChangeDate = (Action: () => void): void => {
     Action();
+    setState(prev => ({
+      ...prev,
+      currentdateValue: currentdate()
+    }));
+  };
+  const hundleChangeView = (view: string) => {
+    changeview(view);
     setState(prev => ({
       ...prev,
       currentdateValue: currentdate()
@@ -59,19 +83,20 @@ const Header = (props: IheaderProps) => {
       isFilterdisplayed: isChecked
     }));
   };
+
   return (
     <div className={classes.root}>
-      <Grid container spacing={1}>
+      <Grid container spacing={0}>
         {/* ********************************************************************** */}
-        <Grid item xs={5} className={classes.CalenderViewActions}>
-          <IconButtonModel size="small">
+        <Grid item xs={7} className={classes.CalenderViewActions}>
+          <IconButtonModel onClick={() => {}} size="small">
             <EventNoteIcon htmlColor="#28a745" fontSize="small" />
           </IconButtonModel>
-          <IconButtonModel size="small">
+          <IconButtonModel onClick={() => {}} size="small">
             <DateRangeIcon htmlColor="#28a745" fontSize="small" />
           </IconButtonModel>
           <IconButtonModel
-            onClick={() => changeDate(gotobackdate)}
+            onClick={() => hundleChangeDate(gotobackdate)}
             size="small"
             WithOutborder={true}
           >
@@ -81,7 +106,7 @@ const Header = (props: IheaderProps) => {
             {state.currentdateValue}
           </Typography>
           <IconButtonModel
-            onClick={() => changeDate(gotonextdate)}
+            onClick={() => hundleChangeDate(gotonextdate)}
             size="small"
             WithOutborder={true}
           >
@@ -105,22 +130,22 @@ const Header = (props: IheaderProps) => {
           </Button>
         </Grid>
         {/* ********************************************************************** */}
-        <Grid item xs={3}></Grid>
+        <Grid item xs={1}></Grid>
         {/* ********************************************************************** */}
         <Grid item xs={4} className={classes.CalenderViewActions}>
           {/* <Grid container spacing={1}>
             <Grid item xs={1}> */}
-          <IconButtonModel size="small">
+          <IconButtonModel onClick={() => {}} size="small">
             <FlagOutlinedIcon htmlColor="#28a745" fontSize="small" />
           </IconButtonModel>
           {/* </Grid>
             <Grid item xs={1}> */}
-          <IconButtonModel size="small">
+          <IconButtonModel onClick={() => {}} size="small">
             <SystemUpdateAltOutlinedIcon htmlColor="#28a745" fontSize="small" />
           </IconButtonModel>
           {/* </Grid>
             <Grid item xs={1}> */}
-          <IconButtonModel size="small">
+          <IconButtonModel onClick={() => {}} size="small">
             <SettingsIcon htmlColor="#28a745" fontSize="small" />
           </IconButtonModel>
           {/* </Grid>
@@ -130,7 +155,7 @@ const Header = (props: IheaderProps) => {
             htmlColor="#bebaba"
             aria-label="outlined primary button group"
             Buttons={buttons}
-            ChangeView={changeview}
+            ChangeView={hundleChangeView}
           ></GroupButtonsModel>
           {/* </Grid>
           </Grid> */}

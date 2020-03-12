@@ -4,13 +4,13 @@ import IconButton from "@material-ui/core/IconButton";
 import clsx from "clsx";
 
 interface propstype {
-  size: "medium" | "small" | undefined;
-  color: "inherit" | "default" | "primary" | "secondary" | undefined;
-  BackColor: string;
-  borderStyle: string;
-  WithOutborder: boolean;
+  size?: "medium" | "small" | undefined;
+  color?: "inherit" | "default" | "primary" | "secondary" | undefined;
+  BackColor?: string;
+  borderStyle?: string;
+  WithOutborder?: boolean;
   onClick: () => void;
-  children: ReactNode;
+  children?: ReactNode;
 }
 
 const useStyles = makeStyles((theme: Theme) =>
