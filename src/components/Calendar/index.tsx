@@ -29,7 +29,7 @@ const Calendar: React.FC = (props: any) => {
     calendarWeekends: true,
     calendarEvents: events,
     currentdate: "",
-    defaultView: "dayGridWeek"
+    defaultView: "dayGridMonth"
   };
   moment.locale("fr");
   const [state, setstate] = useState<DemoAppState>(initialState);

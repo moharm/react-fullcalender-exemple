@@ -29,19 +29,14 @@ import SwitchModel from "../Models/Switch";
 
 const Header = (props: IheaderProps & any) => {
   const classes = useStyles();
-  const defaultProps = {
+  const autocompletedefaultProps = {
     options: Values,
     getOptionLabel: (option: ValueOptionType) => option.title
   };
 
   const getDefaultView = (): string => {
-    let view = "";
-    buttons.map(button => {
-      if (button.isFavorite) {
-        view = button.view;
-      }
-    });
-    return view;
+    //return Default View
+    return buttons.find(button => button.isFavorite)!.view;
   };
 
   //props
@@ -62,8 +57,8 @@ const Header = (props: IheaderProps & any) => {
     }));
   };
 
-  const hundleChangeDate = (Action: () => void): void => {
-    Action();
+  const hundleChangeDate = (action: () => void): void => {
+    action();
     setState(prev => ({
       ...prev,
       currentdateValue: currentdate()
@@ -166,7 +161,7 @@ const Header = (props: IheaderProps & any) => {
           <Grid item xs={4}>
             <Autocomplete
               className={classes.Autocomplete}
-              {...defaultProps}
+              {...autocompletedefaultProps}
               id="disable-close-on-selec"
               clearOnEscape
               renderInput={params => (
@@ -180,7 +175,7 @@ const Header = (props: IheaderProps & any) => {
           <Grid item xs={4}>
             <Autocomplete
               className={classes.Autocomplete}
-              {...defaultProps}
+              {...autocompletedefaultProps}
               id="disable-close-on-select"
               clearOnEscape
               renderInput={params => (
