@@ -11,7 +11,7 @@ export interface IButtonView {
   iconButtonFavorite: (arg: any) => JSX.Element;
 }
 
-export const buttons: Array<IButtonView> = [
+export const buttons: Required<Array<IButtonView>> = [
   {
     key: "Jour",
     title: "Jour",

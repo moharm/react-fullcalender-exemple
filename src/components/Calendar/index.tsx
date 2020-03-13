@@ -155,6 +155,7 @@ const Calendar: React.FC = (props: any) => {
           changeview={changeview}
           gotonextdate={gotonextdate}
           gotobackdate={gotobackdate}
+          defaultview={state.defaultView}
         />
       </div>
       {/* <button onClick={test}>week</button> */}

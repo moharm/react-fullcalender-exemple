@@ -33,14 +33,22 @@ const Header = (props: IheaderProps & any) => {
     options: Values,
     getOptionLabel: (option: ValueOptionType) => option.title
   };
+  const {
+    changeview,
+    gotobackdate,
+    gotonextdate,
+    currentdate,
+    defaultview
+  } = props;
 
   const getDefaultView = (): string => {
     //return Default View
-    return buttons.find(button => button.isFavorite)!.view;
+    //@ts-ignore
+    const { view } = buttons.find(button => button.isFavorite);
+    return view ? view : defaultview;
   };
 
   //props
-  const { changeview, gotobackdate, gotonextdate, currentdate } = props;
 
   // State
   const initialState: IStyteType = {
